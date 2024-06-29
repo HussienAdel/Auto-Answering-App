@@ -2,12 +2,13 @@
 from flask import Flask, request, jsonify, render_template
 from groq import Groq
 
+
 def generate_answer(question):
 
-    prompt = f"{question}\n\nAnswer this question briefly with example"
+    prompt = f"{question}\n\nAnswer this question briefly with example, where your answer should not exceed 500 words"
 
     # Initialize the Groq client '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'
-    #client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+    # client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 
     client = Groq(api_key='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')
 
@@ -26,6 +27,7 @@ def generate_answer(question):
     answer = chat_completion.choices[0].message.content
     return answer
 
+
 app = Flask(__name__) # Initialize the flask App
 
 
@@ -37,6 +39,8 @@ def predict():
     answer = generate_answer(question['question'])
     
     return jsonify({'answer': answer})
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)
